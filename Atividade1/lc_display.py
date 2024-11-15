@@ -1,3 +1,6 @@
+# The idea is to break the drawing of the digit into segments
+# There are 3 horizontal segments (top, middle, and bottom) and 4 vertical segments (top-left, top-right, bottom-left, and bottom-right)
+# The number 8 has all segments
 segments = {
     '0': ['top', 'top-left', 'top-right', 'bottom-left', 'bottom-right', 'bottom'],
     '1': ['top-right', 'bottom-right'],
@@ -11,41 +14,45 @@ segments = {
     '9': ['top', 'top-left', 'top-right', 'middle', 'bottom-right', 'bottom'],
 }
 
+def show_number(screen):
+    for row in screen:
+        print("".join(row))
+
 def process_input(s, n):
+    # Each digit occupies (s + 3) columns
+    # -1 because the last digit does not require extra space at the end
     total_width = len(n) * (s + 3) - 1
+    
+    # The idea is to represent the whole number as a matrix
     screen = [[" " for _ in range(total_width)] for _ in range(2 * s + 3)]
 
     for idx, number in enumerate(n):
         representation = segments[number]
         start_col = idx * (s + 3) 
-        for rep in representation:
-            if rep == 'top':
+        for segment in representation:
+            if segment == 'top':
                 for col in range(start_col + 1, start_col + s + 1):
                     screen[0][col] = "-"
-            elif rep == 'top-left':
+            elif segment == 'top-left':
                 for row in range(1, s + 1):
                     screen[row][start_col] = "|"
-            elif rep == 'top-right':
+            elif segment == 'top-right':
                 for row in range(1, s + 1):
                     screen[row][start_col + s + 1] = "|"
-            elif rep == 'middle':
+            elif segment == 'middle':
                 for col in range(start_col + 1, start_col + s + 1):
                     screen[s + 1][col] = "-"
-            elif rep == 'bottom-left':
+            elif segment == 'bottom-left':
                 for row in range(s + 2, 2 * s + 2):
                     screen[row][start_col] = "|"
-            elif rep == 'bottom-right':
+            elif segment == 'bottom-right':
                 for row in range(s + 2, 2 * s + 2):
                     screen[row][start_col + s + 1] = "|"
-            elif rep == 'bottom':
+            elif segment == 'bottom':
                 for col in range(start_col + 1, start_col + s + 1):
                     screen[2 * s + 2][col] = "-"
 
     show_number(screen)
-
-def show_number(screen):
-    for row in screen:
-        print("".join(row))
 
 s, n = -1, ""
 

@@ -1,0 +1,10 @@
+Para testar, basta rodar o script principal com:
+python3 lc_display.py
+
+Dois parâmetros devem ser passados, o primeiro se refere ao "tamanho" e o segundo ao número que deve ser mostrado.
+Exemplos:
+
+2 0123456789
+3 9876543210
+
+Para sair basta digitar 0 0.

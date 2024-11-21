@@ -29,7 +29,7 @@ def is_mapping_consistent(encrypted_word, dict_word, mapping):
             mapping[c_enc] = c_dict
     return True
 
-with open("test.txt", "r") as file:
+with open("test2.txt", "r") as file:
     # Read the number of dictionary words
     num_words = int(file.readline().strip())
 

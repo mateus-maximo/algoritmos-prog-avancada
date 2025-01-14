@@ -1,28 +1,31 @@
 def decrypt(file_input):
-    # The known plaintext
+    """
+    Função para decifrar o texto de entrada usando um mapeamento baseado em uma frase conhecida.
+    """
+    # O texto conhecido
     target_sentence = "the quick brown fox jumps over the lazy dog"
     target_lengths = [len(word) for word in target_sentence.split()]
 
-    # Read input from the file
+    # Lê a entrada do arquivo
     with open(file_input, 'r') as file:
         lines = file.read().strip().split('\n')
 
-    # Extract the number of test cases
+    # Extrai o número de casos de teste
     test_cases = int(lines[0])
     results = []
     index = 1
 
-    # Process each test case
+    # Processa cada caso de teste
     for _ in range(test_cases):
-        # Read encrypted lines for the current test case
+        # Lê as linhas criptografadas para o caso de teste atual
         num_lines = 0
         while index + num_lines < len(lines) and lines[index + num_lines].strip():
             num_lines += 1
 
         encrypted_lines = lines[index:index + num_lines]
-        index += num_lines + 1  # Move to the next test case
+        index += num_lines + 1  # Avança para o próximo caso de teste
 
-        # Try to find a matching line
+        # Tenta encontrar uma linha correspondente
         mapping = None
         for line in encrypted_lines:
             words = line.split()
@@ -31,7 +34,7 @@ def decrypt(file_input):
                 reverse_mapping = {}
                 valid = True
 
-                # Try to create a mapping
+                # Tenta criar um mapeamento
                 for enc_word, target_word in zip(words, target_sentence.split()):
                     for enc_char, target_char in zip(enc_word, target_word):
                         if enc_char in temp_mapping:
@@ -53,7 +56,7 @@ def decrypt(file_input):
                     mapping = temp_mapping
                     break
 
-        # Apply the mapping or output "No solution"
+        # Aplica o mapeamento ou exibe "No solution"
         if mapping:
             decrypted_lines = [
                 "".join(mapping.get(c, c) for c in line)
@@ -63,10 +66,10 @@ def decrypt(file_input):
         else:
             results.append("No solution")
 
-    # Print results to the console
+    # Exibe os resultados no console
     print("\n\n".join(results))
 
 
-# Example usage
+# Exemplo de uso
 input_file = 'input.txt'
 decrypt(input_file)

@@ -1,6 +1,6 @@
 def decrypt_phrase(words, index, mapping):
     """
-    Recursively attempts to decrypt the phrase by finding a consistent mapping.
+    Tenta recursivamente decifrar a frase encontrando um mapeamento consistente.
     """
     if index == len(words):
         return mapping 
@@ -16,42 +16,43 @@ def decrypt_phrase(words, index, mapping):
 
 def is_mapping_consistent(encrypted_word, dict_word, mapping):
     """
-    Checks if 'encrypted_word' can be mapped to 'dict_word' using a substitution cipher,
-    while maintaining consistency with the existing 'mapping'.
+    Verifica se 'encrypted_word' pode ser mapeada para 'dict_word' usando um cifrador de substituição,
+    mantendo a consistência com o 'mapping' existente.
     """
     for c_enc, c_dict in zip(encrypted_word, dict_word):
         if c_enc in mapping:
             if mapping[c_enc] != c_dict:
-                return False  # Inconsistent mapping
+                return False  # Mapeamento inconsistente
         else:
             if c_dict in mapping.values():
-                return False  # One-to-one mapping violation
+                return False  # Violação de mapeamento um-para-um
             mapping[c_enc] = c_dict
     return True
 
+# Abre o arquivo de entrada
 with open("test.txt", "r") as file:
-    # Read the number of dictionary words
+    # Lê o número de palavras do dicionário
     num_words = int(file.readline().strip())
 
-    # Read the dictionary words
+    # Lê as palavras do dicionário
     dictionary = [file.readline().strip() for _ in range(num_words)]
 
-    # Read the remaining lines as phrases
+    # Lê o restante das linhas como frases
     phrases = [line.strip() for line in file]
 
-# Process each phrase
+# Processa cada frase
 for phrase in phrases:
     words = phrase.split()
     mapping = {}
     result = decrypt_phrase(words, 0, mapping)
     if result is not None:
-        # Decipher the phrase using the mapping
+        # Decifra a frase usando o mapeamento
         decrypted_phrase = []
         for word in words:
             decrypted_word = ''.join(result.get(c, '*') for c in word)
             decrypted_phrase.append(decrypted_word)
         print(' '.join(decrypted_phrase))
     else:
-        # Replace all letters with '*'
+        # Substitui todas as letras por '*'
         decrypted_phrase = ['*' * len(word) for word in words]
         print(' '.join(decrypted_phrase))

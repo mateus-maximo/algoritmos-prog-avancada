@@ -1,6 +1,6 @@
-# The idea is to break the drawing of the digit into segments
-# There are 3 horizontal segments (top, middle, and bottom) and 4 vertical segments (top-left, top-right, bottom-left, and bottom-right)
-# The number 8 has all segments
+# A ideia é dividir o desenho do dígito em segmentos
+# Existem 3 segmentos horizontais (topo, meio e base) e 4 segmentos verticais (superior-esquerdo, superior-direito, inferior-esquerdo e inferior-direito)
+# O número 8 possui todos os segmentos
 segments = {
     '0': ['top', 'top-left', 'top-right', 'bottom-left', 'bottom-right', 'bottom'],
     '1': ['top-right', 'bottom-right'],
@@ -14,16 +14,18 @@ segments = {
     '9': ['top', 'top-left', 'top-right', 'middle', 'bottom-right', 'bottom'],
 }
 
+# Função para exibir o número formatado na tela
 def show_number(screen):
     for row in screen:
         print("".join(row))
 
+# Função que processa o tamanho e o número fornecido como entrada
 def process_input(s, n):
-    # Each digit occupies (s + 3) columns
-    # -1 because the last digit does not require extra space at the end
+    # Cada dígito ocupa (s + 3) colunas
+    # -1 porque o último dígito não exige espaço extra no final
     total_width = len(n) * (s + 3) - 1
     
-    # The idea is to represent the whole number as a matrix
+    # A ideia é representar o número inteiro como uma matriz
     screen = [[" " for _ in range(total_width)] for _ in range(2 * s + 3)]
 
     for idx, number in enumerate(n):
@@ -56,6 +58,7 @@ def process_input(s, n):
 
 s, n = -1, ""
 
+# Loop para receber entradas do usuário até que '0 0' seja fornecido
 while not (s == 0 and n == "0"):
     s, n = input("Enter size and number (enter 0 0 to stop): ").split()
     s = int(s)

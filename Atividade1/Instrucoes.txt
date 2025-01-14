@@ -1,5 +1,5 @@
 Para testar, basta rodar o script principal com:
-python3 lc_display.py
+python3 solution.py
 
 Dois parâmetros devem ser passados, o primeiro se refere ao "tamanho" e o segundo ao número que deve ser mostrado.
 Exemplos:
